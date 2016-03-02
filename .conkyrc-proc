@@ -1,0 +1,108 @@
+# ======================================================================
+# conky-proc by darkprof
+# ======================================================================
+
+
+#=======================================================================
+# Общие параметры для окна
+#=======================================================================
+# ----------------------------------------------------------------------
+# Выводить данные в указанное место
+out_to_console no
+out_to_stderr no
+# ----------------------------------------------------------------------
+# Шрифт
+use_xft yes
+xftfont Monospace:size=16:bold
+uppercase no
+# ----------------------------------------------------------------------
+# Цвета
+default_color white
+default_outline_color red
+default_shade_color red
+# ----------------------------------------------------------------------
+# Линии
+draw_borders no
+border_width 1
+draw_graph_borders yes
+draw_outline no
+draw_shades no
+show_graph_scale no
+show_graph_range no
+stippled_borders 10
+extra_newline yes
+# ----------------------------------------------------------------------
+# Отступы
+use_spacer none
+gap_x 20
+gap_y 20
+# ----------------------------------------------------------------------
+# Буффер
+double_buffer yes
+# отображать использованный объем ОЗУ без учета кэша
+# (кэш считается свободной памятью)
+no_buffers yes
+text_buffer_size 3072
+# ----------------------------------------------------------------------
+# Параметры отрисовки
+update_interval 2
+# ----------------------------------------------------------------------
+# Параметры окна
+background no
+alignment bottom_left
+minimum_size 550 430
+own_window yes
+own_window_class Conky-proc
+own_window_type normal
+own_window_argb_visual yes
+own_window_transparent yes
+own_window_hints   undecorated,below,sticky,skip_taskbar,skip_pager
+# ----------------------------------------------------------------------
+# ======================================================================
+
+
+# ======================================================================
+# Место вывода информации
+# ======================================================================
+TEXT
+# ----------------------------------------------------------------------
+# Вывод процессов потребляющих больше всех памяти
+PROCESSING
+$stippled_hr
+NAME   ${goto 240}PID   ${goto 350}CPU%   ${goto 450}MEM
+$stippled_hr
+${top_mem name 1}  ${goto 230}${top_mem pid 1}\
+  ${goto 320}${top_mem cpu 1}  ${goto 440}${top_mem mem_res 1}
+${top_mem name 2}  ${goto 230}${top_mem pid 2}\
+  ${goto 320}${top_mem cpu 2}  ${goto 440}${top_mem mem_res 2}
+${top_mem name 3}  ${goto 230}${top_mem pid 3}\
+  ${goto 320}${top_mem cpu 3}  ${goto 440}${top_mem mem_res 3}
+${top_mem name 4}  ${goto 230}${top_mem pid 4}\
+  ${goto 320}${top_mem cpu 4}  ${goto 440}${top_mem mem_res 4}
+${top_mem name 5}  ${goto 230}${top_mem pid 5}\
+  ${goto 320}${top_mem cpu 5}  ${goto 440}${top_mem mem_res 5}
+${top_mem name 6}  ${goto 230}${top_mem pid 6}\
+  ${goto 320}${top_mem cpu 6}  ${goto 440}${top_mem mem_res 6}
+${top_mem name 7}  ${goto 230}${top_mem pid 7}\
+  ${goto 320}${top_mem cpu 7}  ${goto 440}${top_mem mem_res 7}
+${top_mem name 8}  ${goto 230}${top_mem pid 8}\
+  ${goto 320}${top_mem cpu 8}  ${goto 440}${top_mem mem_res 8}
+${top_mem name 9}  ${goto 230}${top_mem pid 9}\
+  ${goto 320}${top_mem cpu 9}  ${goto 440}${top_mem mem_res 9}
+# ----------------------------------------------------------------------
+# Вывод процессов потребляющих больше всех цпу
+#$stippled_hr
+#NAME   ${goto 240}PID   ${goto 350}CPU%   ${goto 450}MEM
+#$stippled_hr
+${top name 1}  ${goto 230}${top pid 1}\
+  ${goto 320}${top cpu 1}  ${goto 440}${top mem_res 1}
+#${top name 2}  ${goto 230}${top pid 2}\
+#  ${goto 320}${top cpu 2}  ${goto 440}${top mem_res 2}
+#${top name 3}  ${goto 230}${top pid 3}\
+#  ${goto 320}${top cpu 3}  ${goto 440}${top mem_res 3}
+#${top name 4}  ${goto 230}${top pid 4}\
+#  ${goto 320}${top cpu 4}  ${goto 440}${top mem_res 4}
+#${top name 5}  ${goto 230}${top pid 5}\
+#  ${goto 320}${top cpu 5}  ${goto 440}${top mem_res 5}
+# ----------------------------------------------------------------------
+# ======================================================================

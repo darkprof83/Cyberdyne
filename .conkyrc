@@ -1,0 +1,99 @@
+# ======================================================================
+# conky by darkprof
+# ======================================================================
+
+
+#=======================================================================
+# Общие параметры для окна
+#=======================================================================
+# ----------------------------------------------------------------------
+# Шрифт
+use_xft yes
+xftfont Monospace:size=16:bold
+# ----------------------------------------------------------------------
+
+# ----------------------------------------------------------------------
+# Параметры отрисовки окна
+update_interval 2
+alignment top_right
+#alignment top_left
+#alignment middle_left
+background no
+double_buffer yes
+no_buffers yes
+text_buffer_size 3072
+border_width 1
+default_color white
+default_outline_color red
+default_shade_color red
+draw_borders no
+stippled_borders 10
+draw_graph_borders yes
+draw_outline no
+draw_shades no
+out_to_console no
+out_to_stderr no
+extra_newline yes
+own_window yes
+own_window_class Conky
+#own_window_type desktop
+own_window_type normal
+own_window_argb_visual yes
+own_window_transparent yes
+own_window_hints   undecorated,below,sticky,skip_taskbar,skip_pager
+#own_window_type      override
+#double_buffer yes
+#stippled_borders 0
+uppercase no
+use_spacer none
+show_graph_scale no
+show_graph_range no
+# ----------------------------------------------------------------------
+
+# ----------------------------------------------------------------------
+# Размеры
+gap_x 20
+gap_y 100
+minimum_size 500 900
+# ----------------------------------------------------------------------
+# ======================================================================
+
+
+# ======================================================================
+# Место вывода информации
+# ======================================================================
+TEXT
+$stippled_hr
+${font Monospace:size=32:bold}Cyberdyne Systems${font}
+$stippled_hr
+Series    $sysname
+Model     $machine
+Version   $kernel
+$stippled_hr
+CHIP   ${exec uname -p}
+CORE  ${goto 70}RATIO  ${goto 200}TEMPERATURE  ${goto 420}ATTACK
+ A1  ${execi 2 cat /proc/cpuinfo| grep MHz | cut -c12- | sed -n 1p | sed s/.000//} MHz ${goto 230}${execi 2 sensors | grep 'CPU Temp' | cut -c 15-22} ${goto 440}${cpu cpu1}%
+ A2  ${execi 2 cat /proc/cpuinfo| grep MHz | cut -c12- | sed -n 2p | sed s/.000//} MHz ${goto 220}FAN SPEED ${goto 440}${cpu cpu2}%
+ A3  ${execi 2 cat /proc/cpuinfo| grep MHz | cut -c12- | sed -n 3p | sed s/.000//} MHz ${goto 230}${execi 2 sensors | grep 'CPU Fan' | cut -c 14-22}${goto 440}${cpu cpu3}%
+ A4  ${execi 2 cat /proc/cpuinfo| grep MHz | cut -c12- | sed -n 4p | sed s/.000//} MHz ${goto 440}${cpu cpu4}%
+ A5  ${execi 2 cat /proc/cpuinfo| grep MHz | cut -c12- | sed -n 5p | sed s/.000//} MHz ${goto 440}${cpu cpu5}%
+ A6  ${execi 2 cat /proc/cpuinfo| grep MHz | cut -c12- | sed -n 6p | sed s/.000//} MHz ${goto 440}${cpu cpu6}%
+$stippled_hr
+RAM Usage: $membar
+$mem/$memmax - $memperc%
+#Swap Usage: $swap/$swapmax - $swapperc% ${swapbar}
+Processes: $processes  Running: $running_processes
+$stippled_hr
+${execi 2 /usr/sbin/hddtemp -f /usr/share/hddtemp/ssd.db /dev/sda}
+${fs_used /}/${fs_size /} ${fs_bar /}
+$stippled_hr
+${execi 2 /usr/sbin/hddtemp /dev/sdb}
+${fs_used /mnt/data}/${fs_size /mnt/data} ${fs_bar /mnt/data}
+$stippled_hr
+${execi 2 /usr/sbin/hddtemp /dev/sdc}
+${fs_used /mnt/alex}/${fs_size /mnt/alex} ${fs_bar /mnt/alex}
+$stippled_hr
+NETWORKING
+${upspeedgraph eth0 32,150 ffffff ffffff}  ${goto 240}${downspeedgraph eth0 32,150 ffffff ffffff}
+Upload:  ${upspeed eth0}  Download:  ${downspeed eth0}
+# ======================================================================
