@@ -30,8 +30,8 @@ function draw_speedgraph (display, element)
       a = element.rectangle.color.a,
     },
     line_width = 1,
-    from = {x, y,},
-    to = {x, y,},
+    from = {x, y = element.rectangle.from.y + element.max_y,},
+    to = {x = 0, y,},
   }
 
   local c = element.count
@@ -41,8 +41,6 @@ function draw_speedgraph (display, element)
       c = c - 1
       local pixels = element.value[i] / element.max_speed * element.max_y
       line.from.x = x
-      line.from.y = element.rectangle.from.y + element.max_y
-      line.to.x = 0
       line.to.y = 0 - pixels
       draw_line (display, line)
       x = x - 1
@@ -54,8 +52,6 @@ function draw_speedgraph (display, element)
       c = c - 1
       local pixels = element.value[i]/element.max_speed * element.max_y
       line.from.x = x
-      line.from.y = element.rectangle.from.y + element.max_y
-      line.to.x = 0
       line.to.y = 0 - pixels
       draw_line (display, line)
       x = x - 1
