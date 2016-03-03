@@ -60,6 +60,14 @@ minimum_size 500 900
 
 
 # ======================================================================
+# Loading lua script for drawning bars
+# ======================================================================
+lua_load ~/.conky-bargraph.lua
+lua_draw_hook_pre conky_main
+# ======================================================================
+
+
+# ======================================================================
 # Место вывода информации
 # ======================================================================
 TEXT
@@ -94,6 +102,6 @@ ${execi 2 /usr/sbin/hddtemp /dev/sdc}
 ${fs_used /mnt/alex}/${fs_size /mnt/alex} ${fs_bar /mnt/alex}
 $stippled_hr
 NETWORKING
-${upspeedgraph eth0 32,150 ffffff ffffff}  ${goto 240}${downspeedgraph eth0 32,150 ffffff ffffff}
-Upload:  ${upspeed eth0}  Download:  ${downspeed eth0}
+#${upspeedgraph eth0 32,150 ffffff ffffff}  ${goto 240}${downspeedgraph eth0 32,150 ffffff ffffff}
+${voffset 100}Upload:  ${upspeed eth0}  Download:  ${downspeed eth0}
 # ======================================================================
