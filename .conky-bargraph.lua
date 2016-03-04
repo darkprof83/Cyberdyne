@@ -19,6 +19,15 @@ function draw_line(display, element)
 end-- end draw_line
 
 
+function math_scale (value, max_speed, hight)
+  if value == 0 then
+    return 1
+  else
+    return math.log10 (value) / math.log10 (max_speed) * hight
+  end
+end-- end of
+
+
 function draw_speedgraph (display, element)
   draw_rectangle (display, element.rectangle)
 
@@ -39,7 +48,7 @@ function draw_speedgraph (display, element)
   for i = element.index, 1, -1 do
     if c > 1 then
       c = c - 1
-      local pixels = element.value[i] / element.max_speed * element.rectangle.to.y
+      local pixels = math_scale (element.value[i], element.max_speed, element.rectangle.to.y)
       line.from.x = x
       line.to.y = 0 - pixels
       draw_line (display, line)
@@ -50,7 +59,7 @@ function draw_speedgraph (display, element)
   for i = element.rectangle.to.x, element.index - 1, -1 do
     if c > 1 then
       c = c - 1
-      local pixels = element.value[i]/element.max_speed * element.rectangle.to.y
+      local pixels = math_scale (element.value[i], element.max_speed, element.rectangle.to.y)
       line.from.x = x
       line.to.y = 0 - pixels
       draw_line (display, line)
@@ -75,8 +84,8 @@ upspeedgraph = {
   value = {},
   index = 1,
   count = 1,
-  --max_speed = 10240,
-  max_speed = 2048,
+  max_speed = 10240,
+  --max_speed = 2048,
   --max_x = upspeedgraph.rectangle.to.x,
   --max_y = upspeedgraph.rectangle.to.y,
 }
