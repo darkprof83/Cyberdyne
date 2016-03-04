@@ -103,5 +103,5 @@ ${fs_used /mnt/alex}/${fs_size /mnt/alex} ${fs_bar /mnt/alex}
 $stippled_hr
 NETWORKING
 #${upspeedgraph eth0 32,150 ffffff ffffff}  ${goto 240}${downspeedgraph eth0 32,150 ffffff ffffff}
-${voffset 100}Upload:  ${upspeed eth0}  Download:  ${downspeed eth0}
+${voffset 100}Upload:  ${upspeed eth0}  ${goto 250}Download:  ${downspeed eth0}
 # ======================================================================

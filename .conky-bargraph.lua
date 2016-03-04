@@ -56,7 +56,7 @@ function draw_speedgraph (display, element)
     end-- if c > 0 then
   end-- end for
 
-  for i = element.rectangle.to.x, element.index - 1, -1 do
+  for i = element.rectangle.to.x, element.index + 1, -1 do
     if c > 1 then
       c = c - 1
       local pixels = math_scale (element.value[i], element.max_speed, element.rectangle.to.y)
@@ -90,6 +90,22 @@ upspeedgraph = {
   --max_y = upspeedgraph.rectangle.to.y,
 }
 
+downspeedgraph = {
+  rectangle = {
+    color = { r = 1, g = 1, b = 1, a = 1, },
+    line_width = 1,
+    from = {x = 250, y = 790,},
+    to = {x = 200, y = 80,},
+  },
+  value = {},
+  index = 1,
+  count = 1,
+  max_speed = 10240,
+  --max_speed = 2048,
+  --max_x = upspeedgraph.rectangle.to.x,
+  --max_y = upspeedgraph.rectangle.to.y,
+}
+
 
 function conky_main()
   if conky_window == nil then return end
@@ -97,10 +113,13 @@ function conky_main()
   cr = cairo_create(cs)
   local updates=tonumber(conky_parse('${updates}'))
 
-  if updates>5 then
+  if updates>2 then
     upspeedgraph.value[upspeedgraph.index] = tonumber(conky_parse('${upspeedf}'))
     --print (upspeedgraph.value[upspeedgraph.index])
     draw_speedgraph (cr, upspeedgraph)
+
+    downspeedgraph.value[downspeedgraph.index] = tonumber(conky_parse('${downspeedf}'))
+    draw_speedgraph (cr, downspeedgraph)
   end-- if updates>5
 
   cairo_destroy(cr)
