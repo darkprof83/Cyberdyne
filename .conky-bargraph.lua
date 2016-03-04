@@ -30,16 +30,16 @@ function draw_speedgraph (display, element)
       a = element.rectangle.color.a,
     },
     line_width = 1,
-    from = {x, y = element.rectangle.from.y + element.max_y,},
+    from = {x, y = element.rectangle.from.y + element.rectangle.to.y,},
     to = {x = 0, y,},
   }
 
   local c = element.count
-  local x = element.rectangle.from.x + element.max_x
+  local x = element.rectangle.from.x + element.rectangle.to.x
   for i = element.index, 1, -1 do
     if c > 1 then
       c = c - 1
-      local pixels = element.value[i] / element.max_speed * element.max_y
+      local pixels = element.value[i] / element.max_speed * element.rectangle.to.y
       line.from.x = x
       line.to.y = 0 - pixels
       draw_line (display, line)
@@ -47,10 +47,10 @@ function draw_speedgraph (display, element)
     end-- if c > 0 then
   end-- end for
 
-  for i = element.max_x, element.index - 1, -1 do
+  for i = element.rectangle.to.x, element.index - 1, -1 do
     if c > 1 then
       c = c - 1
-      local pixels = element.value[i]/element.max_speed * element.max_y
+      local pixels = element.value[i]/element.max_speed * element.rectangle.to.y
       line.from.x = x
       line.to.y = 0 - pixels
       draw_line (display, line)
@@ -59,9 +59,9 @@ function draw_speedgraph (display, element)
   end-- end for
 
   element.index = element.index + 1
-  if element.index > element.max_x then element.index = 1 end
+  if element.index > element.rectangle.to.x then element.index = 1 end
   element.count = element.count + 1
-  if element.count > element.max_x then element.count = element.max_x end
+  if element.count > element.rectangle.to.x then element.count = element.rectangle.to.x end
 end-- end draw_speedgraph
 
 
@@ -77,8 +77,8 @@ upspeedgraph = {
   count = 1,
   --max_speed = 10240,
   max_speed = 2048,
-  max_x = upspeedgraph.rectangle.to.x,
-  max_y = upspeedgraph.rectangle.to.y,
+  --max_x = upspeedgraph.rectangle.to.x,
+  --max_y = upspeedgraph.rectangle.to.y,
 }
 
 
