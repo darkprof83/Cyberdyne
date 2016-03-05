@@ -19,6 +19,15 @@ function draw_line(display, element)
 end-- end draw_line
 
 
+function draw_line_to(display, element)
+  cairo_set_source_rgba (display, element.color.r, element.color.g, element.color.b, element.color.a)
+  cairo_set_line_width (display, element.line_width)
+  cairo_move_to (display, element.from.x, element.from.y)
+  cairo_line_to (display, element.to.x, element.to.y)
+  cairo_stroke(display);
+end-- end draw_line
+
+
 function math_scale (value, max_speed, hight)
   if value == 0 then
     return 1
@@ -85,6 +94,7 @@ upspeedgraph = {
   index = 1,
   count = 1,
   max_speed = 10240,
+  fill = false,
   --max_speed = 2048,
   --max_x = upspeedgraph.rectangle.to.x,
   --max_y = upspeedgraph.rectangle.to.y,
@@ -101,6 +111,7 @@ downspeedgraph = {
   index = 1,
   count = 1,
   max_speed = 10240,
+  fill = false,
   --max_speed = 2048,
   --max_x = upspeedgraph.rectangle.to.x,
   --max_y = upspeedgraph.rectangle.to.y,
