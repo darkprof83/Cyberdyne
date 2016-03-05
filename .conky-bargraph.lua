@@ -52,15 +52,36 @@ function draw_speedgraph (display, element)
     to = {x = 0, y,},
   }
 
-  local c = element.count
+  --local pixels = math_scale (element.value[i], element.max_speed, element.rectangle.to.y)
   local x = element.rectangle.from.x + element.rectangle.to.x
+  local c = element.count
   for i = element.index, 1, -1 do
     if c > 1 then
       c = c - 1
+      -- пока для каждого столбца высота в пикселях расчитываетя каждый раз в цикле
       local pixels = math_scale (element.value[i], element.max_speed, element.rectangle.to.y)
-      line.from.x = x
-      line.to.y = 0 - pixels
-      draw_line (display, line)
+      -- если график заливать не надо
+      if element.fill == false then
+        -- если еще нет сохраненной координаты y
+        if element.last == 0 then
+          line.from.y = element.rectangle.from.y + element.rectangle.to.y - pixels
+          line.from.x = x
+        -- если уже есть сохраненные координаты y
+        else
+          line.from.y = element.last
+          line.from.x = x - 1
+        end-- end if element.last.x == 0 then
+        line.to.y = element.rectangle.from.y + element.rectangle.to.y - pixels
+        line.to.x = x
+        draw_line_to (display, line)
+      -- если требуется залить график
+      else
+        -- с обходом цикла меняется только начальный х и dy
+        line.from.x = x
+        line.to.y = 0 - pixels
+        draw_line (display, line)
+      end-- end if element.fill == false then
+      element.last = line.to.y
       x = x - 1
     end-- if c > 0 then
   end-- end for
@@ -69,9 +90,28 @@ function draw_speedgraph (display, element)
     if c > 1 then
       c = c - 1
       local pixels = math_scale (element.value[i], element.max_speed, element.rectangle.to.y)
-      line.from.x = x
-      line.to.y = 0 - pixels
-      draw_line (display, line)
+      -- если график заливать не надо
+      if element.fill == false then
+        -- если еще нет сохраненной координаты y
+        if element.last == 0 then
+          line.from.y = element.rectangle.from.y + element.rectangle.to.y - pixels
+          line.from.x = x
+        -- если уже есть сохраненные координаты y
+        else
+          line.from.y = element.last
+          line.from.x = x - 1
+        end-- end if element.last.x == 0 then
+        line.to.y = element.rectangle.from.y + element.rectangle.to.y - pixels
+        line.to.x = x
+        draw_line_to (display, line)
+      -- если требуется залить график
+      else
+        -- с обходом цикла меняется только начальный х и dy
+        line.from.x = x
+        line.to.y = 0 - pixels
+        draw_line (display, line)
+      end-- end if element.fill == false then
+      element.last = line.to.y
       x = x - 1
     end-- if c > 0 then
   end-- end for
@@ -95,10 +135,7 @@ upspeedgraph = {
   count = 1,
   max_speed = 10240,
   fill = false,
-  last = {
-    x = 0,
-    y = 0,
-  },
+  last = 0,
   --max_speed = 2048,
   --max_x = upspeedgraph.rectangle.to.x,
   --max_y = upspeedgraph.rectangle.to.y,
@@ -116,10 +153,7 @@ downspeedgraph = {
   count = 1,
   max_speed = 10240,
   fill = false,
-  last = {
-    x = 0,
-    y = 0,
-  },
+  last = 0,
   --max_speed = 2048,
   --max_x = upspeedgraph.rectangle.to.x,
   --max_y = upspeedgraph.rectangle.to.y,
