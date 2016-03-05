@@ -42,10 +42,10 @@ function draw_speedgraph (display, element)
 
   local line = {
     color = {
-      r = element.rectangle.color.r,
-      g = element.rectangle.color.g,
-      b = element.rectangle.color.b,
-      a = element.rectangle.color.a,
+      r = 1,
+      g = 1,
+      b = 1,
+      a = 1,
     },
     line_width = 1,
     from = {x, y = element.rectangle.from.y + element.rectangle.to.y,},
@@ -95,6 +95,10 @@ upspeedgraph = {
   count = 1,
   max_speed = 10240,
   fill = false,
+  last = {
+    x = 0,
+    y = 0,
+  },
   --max_speed = 2048,
   --max_x = upspeedgraph.rectangle.to.x,
   --max_y = upspeedgraph.rectangle.to.y,
@@ -112,6 +116,10 @@ downspeedgraph = {
   count = 1,
   max_speed = 10240,
   fill = false,
+  last = {
+    x = 0,
+    y = 0,
+  },
   --max_speed = 2048,
   --max_x = upspeedgraph.rectangle.to.x,
   --max_y = upspeedgraph.rectangle.to.y,
