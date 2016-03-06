@@ -75,33 +75,34 @@ function draw_speedgraph (display, element)
     to = {x = 0, y,},
   }
 
-  --local pixels = math_scale (element.value[i], element.max_speed, element.rectangle.to.y)
+  --local pixels = math_scale (element.value[element.index], element.max_speed, element.rectangle.to.y)
+  element.value[element.index] = math_scale (element.value[element.index], element.max_speed, element.rectangle.to.y, element.scale)
   local x = element.rectangle.from.x + element.rectangle.to.x
   local c = element.count
   for i = element.index, 1, -1 do
     if c > 1 then
       c = c - 1
       -- пока для каждого столбца высота в пикселях расчитываетя каждый раз в цикле
-      local pixels = math_scale (element.value[i], element.max_speed, element.rectangle.to.y, element.scale)
+      --local pixels = math_scale (element.value[i], element.max_speed, element.rectangle.to.y, element.scale)
       -- если график заливать не надо
       if element.fill == false then
         -- если еще нет сохраненной координаты y
         if element.last == 0 then
-          line.from.y = element.rectangle.from.y + element.rectangle.to.y - pixels
+          line.from.y = element.rectangle.from.y + element.rectangle.to.y - element.value[i]
           line.from.x = x
         -- если уже есть сохраненные координаты y
         else
           line.from.y = element.last
           line.from.x = x - 1
         end-- end if element.last.x == 0 then
-        line.to.y = element.rectangle.from.y + element.rectangle.to.y - pixels
+        line.to.y = element.rectangle.from.y + element.rectangle.to.y - element.value[i]
         line.to.x = x
         draw_line_to (display, line)
       -- если требуется залить график
       else
         -- с обходом цикла меняется только начальный х и dy
         line.from.x = x
-        line.to.y = 0 - pixels
+        line.to.y = 0 - element.value[i]
         draw_line (display, line)
       end-- end if element.fill == false then
       element.last = line.to.y
@@ -112,26 +113,26 @@ function draw_speedgraph (display, element)
   for i = element.rectangle.to.x, element.index + 1, -1 do
     if c > 1 then
       c = c - 1
-      local pixels = math_scale (element.value[i], element.max_speed, element.rectangle.to.y, element.scale)
+      --local pixels = math_scale (element.value[i], element.max_speed, element.rectangle.to.y, element.scale)
       -- если график заливать не надо
       if element.fill == false then
         -- если еще нет сохраненной координаты y
         if element.last == 0 then
-          line.from.y = element.rectangle.from.y + element.rectangle.to.y - pixels
+          line.from.y = element.rectangle.from.y + element.rectangle.to.y - element.value[i]
           line.from.x = x
         -- если уже есть сохраненные координаты y
         else
           line.from.y = element.last
           line.from.x = x - 1
         end-- end if element.last.x == 0 then
-        line.to.y = element.rectangle.from.y + element.rectangle.to.y - pixels
+        line.to.y = element.rectangle.from.y + element.rectangle.to.y - element.value[i]
         line.to.x = x
         draw_line_to (display, line)
       -- если требуется залить график
       else
         -- с обходом цикла меняется только начальный х и dy
         line.from.x = x
-        line.to.y = 0 - pixels
+        line.to.y = 0 - element.value[i]
         draw_line (display, line)
       end-- end if element.fill == false then
       element.last = line.to.y
@@ -175,7 +176,7 @@ downspeedgraph = {
   value = {},
   index = 1,
   count = 1,
-  max_speed = 10240,
+  max_speed = 256,
   fill = true,
   last = 0,
   scale = 0.5,
