@@ -1,3 +1,3 @@
 # Cyberdyne
 Config for conky program
-![GitHub Screenshot](/snapshot13.png)
+![GitHub Screenshot](/snapshot14.png)

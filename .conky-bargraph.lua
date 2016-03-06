@@ -27,12 +27,35 @@ function draw_line_to(display, element)
   cairo_stroke(display);
 end-- end draw_line
 
-
-function math_scale (value, max_speed, hight)
+--[[
+without scale    with scale
+- 10000          - 10000
+|                |
+-                -
+|                |
+-                -
+| 1000           |
+-                -
+|                | 5000
+-                -
+|                |
+- 100            -
+|                |
+-                -
+|                |
+-                - 200 scale 0.3
+| 10             |
+-                - 33
+|                |
+-                - 6
+|                |
+- 1              - 1
+]]--
+function math_scale (value, max_speed, hight, scale)
   if value == 0 then
     return 1
   else
-    return math.log10 (value) / math.log10 (max_speed) * hight
+    return math.log10 (value) / math.log10 (max_speed) * hight * scale
   end
 end-- end of
 
@@ -59,7 +82,7 @@ function draw_speedgraph (display, element)
     if c > 1 then
       c = c - 1
       -- пока для каждого столбца высота в пикселях расчитываетя каждый раз в цикле
-      local pixels = math_scale (element.value[i], element.max_speed, element.rectangle.to.y)
+      local pixels = math_scale (element.value[i], element.max_speed, element.rectangle.to.y, element.scale)
       -- если график заливать не надо
       if element.fill == false then
         -- если еще нет сохраненной координаты y
@@ -89,7 +112,7 @@ function draw_speedgraph (display, element)
   for i = element.rectangle.to.x, element.index + 1, -1 do
     if c > 1 then
       c = c - 1
-      local pixels = math_scale (element.value[i], element.max_speed, element.rectangle.to.y)
+      local pixels = math_scale (element.value[i], element.max_speed, element.rectangle.to.y, element.scale)
       -- если график заливать не надо
       if element.fill == false then
         -- если еще нет сохраненной координаты y
@@ -133,9 +156,10 @@ upspeedgraph = {
   value = {},
   index = 1,
   count = 1,
-  max_speed = 10240,
-  fill = false,
+  max_speed = 256,
+  fill = true,
   last = 0,
+  scale = 0.5,
   --max_speed = 2048,
   --max_x = upspeedgraph.rectangle.to.x,
   --max_y = upspeedgraph.rectangle.to.y,
@@ -152,8 +176,9 @@ downspeedgraph = {
   index = 1,
   count = 1,
   max_speed = 10240,
-  fill = false,
+  fill = true,
   last = 0,
+  scale = 0.5,
   --max_speed = 2048,
   --max_x = upspeedgraph.rectangle.to.x,
   --max_y = upspeedgraph.rectangle.to.y,
