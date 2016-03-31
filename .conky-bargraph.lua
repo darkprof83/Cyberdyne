@@ -52,7 +52,7 @@ without scale    with scale
 - 1              - 1
 ]]--
 function math_scale (value, max_speed, hight, scale)
-  if value == 0 then
+  if value < 1 then
     return 1
   else
     return math.log10 (value) / math.log10 (max_speed) * hight * scale
