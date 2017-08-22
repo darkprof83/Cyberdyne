@@ -1,7 +1,7 @@
 # ======================================================================
 # conky by darkprof
 # ======================================================================
-
+# Needs hddtemp lm_sensors
 
 #=======================================================================
 # Общие параметры для окна
@@ -80,9 +80,9 @@ Version   $kernel
 $stippled_hr
 CHIP   ${exec uname -p}
 CORE  ${goto 70}RATIO  ${goto 200}TEMPERATURE  ${goto 420}ATTACK
- A1  ${execi 2 cat /proc/cpuinfo| grep MHz | cut -c12- | sed -n 1p | sed s/.000//} MHz ${goto 230}${execi 2 sensors | grep 'CPU Temp' | cut -c 15-22} ${goto 440}${cpu cpu1}%
+ A1  ${execi 2 cat /proc/cpuinfo| grep MHz | cut -c12- | sed -n 1p | sed s/.000//} MHz ${goto 230}${execi 2 sensors | grep 'temp2' | cut -c 15-22} ${goto 440}${cpu cpu1}%
  A2  ${execi 2 cat /proc/cpuinfo| grep MHz | cut -c12- | sed -n 2p | sed s/.000//} MHz ${goto 220}FAN SPEED ${goto 440}${cpu cpu2}%
- A3  ${execi 2 cat /proc/cpuinfo| grep MHz | cut -c12- | sed -n 3p | sed s/.000//} MHz ${goto 230}${execi 2 sensors | grep 'CPU Fan' | cut -c 14-22}${goto 440}${cpu cpu3}%
+ A3  ${execi 2 cat /proc/cpuinfo| grep MHz | cut -c12- | sed -n 3p | sed s/.000//} MHz ${goto 230}${execi 2 sensors | grep 'fan2' | cut -c 14-22}${goto 440}${cpu cpu3}%
  A4  ${execi 2 cat /proc/cpuinfo| grep MHz | cut -c12- | sed -n 4p | sed s/.000//} MHz ${goto 440}${cpu cpu4}%
  A5  ${execi 2 cat /proc/cpuinfo| grep MHz | cut -c12- | sed -n 5p | sed s/.000//} MHz ${goto 440}${cpu cpu5}%
  A6  ${execi 2 cat /proc/cpuinfo| grep MHz | cut -c12- | sed -n 6p | sed s/.000//} MHz ${goto 440}${cpu cpu6}%
@@ -96,7 +96,7 @@ ${execi 2 /usr/sbin/hddtemp -f /usr/share/hddtemp/ssd.db /dev/sda}
 ${fs_used /}/${fs_size /} ${fs_bar /}
 $stippled_hr
 ${execi 2 /usr/sbin/hddtemp /dev/sdb}
-${fs_used /mnt/data}/${fs_size /mnt/data} ${fs_bar /mnt/data}
+${fs_used /home}/${fs_size /home} ${fs_bar /home}
 $stippled_hr
 ${execi 2 /usr/sbin/hddtemp /dev/sdc}
 ${fs_used /mnt/alex}/${fs_size /mnt/alex} ${fs_bar /mnt/alex}
